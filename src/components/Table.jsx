@@ -1,14 +1,14 @@
 import React from 'react'
 
-const formatPhone = (str) => {
-  if (!str || str.length === 0) {
-    return "";
-  }
-  if (str.length !== 10) {
-    return str;
-  }
-  return `(${str.slice(0, 3)})${str.slice(3, 6)}-${str.slice(6)}`;
-}
+// const formatPhone = (str) => {
+//   if (!str || str.length === 0) {
+//     return "";
+//   }
+//   if (str.length !== 10) {
+//     return str;
+//   }
+//   return `(${str.slice(0, 3)})${str.slice(3, 6)}-${str.slice(6)}`;
+// }
 
 export default function Table({ people }) {
   return (
@@ -29,7 +29,7 @@ export default function Table({ people }) {
             <td>{item.firstName}</td>
             <td>{item.lastName}</td>
             <td>{item.email}</td>
-            <td>{formatPhone(item.phone)}</td>
+            <td>{item.phone}</td>
           </tr>
         )
         }
