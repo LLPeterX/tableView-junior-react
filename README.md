@@ -1,70 +1,67 @@
-# Getting Started with Create React App
+# Тестовое задание на позицию frontend-разработчика
+Время выполнения - 5 дней
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Задание:
+Разработать приложение React для отображения таблицы с данными.
+Дополнительный плюс: приложение должно запускаться из Docker-контейнера
 
-## Available Scripts
+## Функционал
+* Сортировка по столбцам: при клике на заголовке строки таблицы сортируются по по возрастанию, 
+при повтолрном клике - по убыванию. Отображать элемент текущего порядка сортировки
+* Пагинация: вывод по 50 элементов на странице
+* Фильтрация: компонент - текстовое поле. При вводе текста те строки таблицы, которые НЕ содержат введенную подстроку, скрываются. 
+Перефильтрация осуществлятся при нажатии на кнопку "найти"
+* При клике на строку таблицы значения полей выводятся в дополнительном блоке под таблицей
+* Над таблицей - кнопка "Добавить", при нажати на которую выпадает формв добавления ряда:
+  id, firstName, lastName, email, phone.
+После добавления всех инпутов появдлется кнопка "Добавить", которая вставляет введенные данные в начало таблицы
+* Для демонстрации сделать простую html-страницу
+* Пользователю предлагается выбрать набор данных - маленький или большой. Данные с сервера.
 
-In the project directory, you can run:
+Данные в таблицу загружаются с сервера www.filltext.com
+Сервер возвращает данные в виде массива JSON:
+```
+[
+  {
+   id: 101,
+   firstName: "Sue",
+   lastName: "Johnson",
+   email: "sue@mail.ru",
+   phone: "(712)211-6298",
+   address: {
+    streetAddress: "9782 Mattis str.",
+    city: "Ablabla",
+    state: "NY",
+    zip: "33567"
+   },
+   description: "bla bla bla..."
+ } 
+]
+```
 
-### `npm start`
+##Отображение:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+|------|-------------|------------|-------------|-------------|
+| id ^ | firstName ^ | lastName ^ | email     ^ | phone     ^ |
+|------|-------------|------------|-------------|-------------|
+| 101  |Sue          |Corson      |DWally@n.gov |(612)211-6296|
+|------|-------------|------------|-------------|-------------|
+| 102  |Lor          |Ipsumd      |DWally@n.gov |(612)211-6295|
+|------|-------------|------------|-------------|-------------|
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Если выделена строка c id=101, то под таблицей блок с полями
 
-### `npm test`
+* Маленький объем данных берется по ссылке: http://www.filltext.com?rows=32&id=[number|1000]&firstName={firstName}&lastName={lastName} ... (+ email, phone, address Object, description)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* Большой объем: http://www.filltext.com?rows=1000 (остальные параметры те же)
 
-### `npm run build`
+##Замечания
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* Обратить внимание на скорость. Зависания интерфейса при фильтрации недопустимы.
+* Во время загрузки отображать индикатор
+* Код должен быть хорошим и готовым к переиспользованию
+* Можно bootstrap
+* js можно использовать для оформления, но не для решения задачи (?)
+* Описать, как тестировался код
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
