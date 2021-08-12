@@ -1,0 +1,6 @@
+.centered {
+  margin: auto;
+  height: 100%;
+  position: relative;
+  text-align: center;
+}

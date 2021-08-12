@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 // const formatPhone = (str) => {
 //   if (!str || str.length === 0) {
@@ -24,7 +25,7 @@ export default function Table({ people }) {
       </thead>
       <tbody>
         {people.map(item =>
-          <tr key={item.id + item.firstName}>
+          <tr key={item.id + item.firstName + item.lastName}>
             <th scope="row">{item.id}</th>
             <td>{item.firstName}</td>
             <td>{item.lastName}</td>
@@ -36,3 +37,8 @@ export default function Table({ people }) {
       </tbody>
     </table>)
 }
+
+Table.propTypes = {
+  people: PropTypes.array
+}
+

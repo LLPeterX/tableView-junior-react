@@ -1,14 +1,20 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Table from "./components/Table";
+import Loader from 'react-loader-spinner';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
+import './app.css';
+
 
 // format phone number to (xxx)xxx-xxxx
 
 function App() {
   //state to hold received data
   const [people, setPeople] = useState([]);
-  // state to switch URL
+  // state to switch URL. default 50 (50 - small; 1000 - big)
   const [volume, setVolume] = useState(50);
+  // state for loading
+  const [isLoading, setIsLoading] = useState(true);
 
   // fetch data from www.filltext.com
   useEffect(() => {
@@ -17,13 +23,24 @@ function App() {
       .then(response => {
         //console.log(response.data);
         setPeople(response.data);
+        setIsLoading(false);
       })
   }, [volume]);
 
 
   return (
     <div className="container">
-      <Table people={people} />
+      {isLoading ?
+        <Loader
+          className="centered"
+          type="Puff"
+          color="#00BFFF"
+          height={100}
+          width={100}
+        />
+        :
+        <Table people={people} />
+      }
     </div>
   );
 }
