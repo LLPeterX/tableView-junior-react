@@ -41,7 +41,7 @@ function App() {
         <Table
           data={people}
           columns={["id", "firstName", "lastName", "email", "phone"]}
-          headers={["#", "firstName", "lastName", "email", "phone"]}
+          headers={["#", "Имя", "Фамилия", "Почта", "Телефон"]}
         />
       }
     </div>

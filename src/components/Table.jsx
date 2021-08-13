@@ -1,4 +1,7 @@
 import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSortUp } from '@fortawesome/free-solid-svg-icons'
+import './table.css'
 
 export default function Table({ data, columns, headers }) {
   if (!data) {
@@ -12,11 +15,11 @@ export default function Table({ data, columns, headers }) {
   }
 
   return (
-    <table className="table">
+    <table className="table table-hover table-bordered">
       <thead>
         <tr>
           {
-            headers.map((h) => <th scope="col" key={h}>{h}</th>)
+            headers.map((h) => <th scope="col" key={h}>{h} <FontAwesomeIcon icon={faSortUp} /></th>)
           }
         </tr>
       </thead>
