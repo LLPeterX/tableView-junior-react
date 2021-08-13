@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
 export default function Table({ data, columns, headers }) {
   if (!data) {
@@ -32,7 +31,4 @@ export default function Table({ data, columns, headers }) {
     </table>)
 }
 
-Table.propTypes = {
-  people: PropTypes.array
-}
 
