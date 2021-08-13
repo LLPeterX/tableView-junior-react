@@ -16,9 +16,8 @@ export default function Table({ data, columns, headers }) {
   // state for active dataset to show in table
   const [currentData, setSurrentData] = useState(data);
   // state for sorting
-  const [sortBy, setSortBy] = useState({ by: "id", ascending: true });
-  //state for filter
-  const [filter, setFilter] = useState("");
+
+
   // main handler
   const clickHandler = (event) => {
     const target = event.target;
