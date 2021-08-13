@@ -6,7 +6,6 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import './app.css';
 
 
-// format phone number to (xxx)xxx-xxxx
 
 function App() {
   //state to hold received data
@@ -39,7 +38,11 @@ function App() {
           width={100}
         />
         :
-        <Table people={people} />
+        <Table
+          data={people}
+          columns={["id", "firstName", "lastName", "email", "phone"]}
+          headers={["#", "firstName", "lastName", "email", "phone"]}
+        />
       }
     </div>
   );
