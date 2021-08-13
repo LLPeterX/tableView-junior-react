@@ -16,21 +16,15 @@ export default function Table({ data, columns, headers }) {
     <table className="table">
       <thead>
         <tr>
-          <th scope="col">id</th>
-          <th scope="col">firstName</th>
-          <th scope="col">lastName</th>
-          <th scope="col">email</th>
-          <th scope="col">phone</th>
+          {
+            headers.map((h) => <th scope="col" key={h}>{h}</th>)
+          }
         </tr>
       </thead>
       <tbody>
-        {data.map(item =>
-          <tr key={item.id + item.firstName + item.lastName}>
-            <th scope="row">{item.id}</th>
-            <td>{item.firstName}</td>
-            <td>{item.lastName}</td>
-            <td>{item.email}</td>
-            <td>{item.phone}</td>
+        {data.map((item, i) =>
+          <tr key={i}>
+            {columns.map((col, j) => <td key={i + "_" + j}>{item[col]}</td>)}
           </tr>
         )
         }
