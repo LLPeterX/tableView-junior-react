@@ -45,10 +45,10 @@ export default function Table({ data, columns, headers }) {
   // state for active dataset to show in table
   const [currentData, setSurrentData] = useState(sortData(data, sortBy, sortAsc));
 
-  // filter & sort in useEffect
+  // filter & sort in useEffect -- вообще не вызывается (?)
   useEffect(() => {
     let sortedData = sortData(currentData, sortBy, sortAsc);
-    //console.log('useEffect() sorted:', sortBy, sortedData);
+    console.log('Table useEffect() sorted:', sortBy, sortedData.length);
     setSurrentData(sortedData);
 
   }, [currentData, sortBy, sortAsc])

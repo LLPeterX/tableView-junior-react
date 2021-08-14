@@ -18,11 +18,12 @@ function App() {
 
   // fetch data from www.filltext.com
   useEffect(() => {
+    setIsLoading(false);
     console.log(' App:useEffect volume=', volume);
     const baseURL = `http://www.filltext.com/?rows=${volume}&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}`;
     axios.get(baseURL)
       .then(response => {
-        console.log('after fetch: ', response.data.length);
+        console.log('after fetch: size=', response.data.length);
         setPeople(response.data);
         setIsLoading(false);
       })
