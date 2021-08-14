@@ -1,3 +1,9 @@
 .sortSign {
   float: right;
+  width: 20px;
+  height: auto;
+}
+
+.sortDown {
+  transform: rotate(180deg);
 }
