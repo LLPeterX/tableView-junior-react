@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 //import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 //import { faSortUp } from '@fortawesome/free-solid-svg-icons'
 //import sortIcon from '../assets/icons/icons8-sort-down-50.png';
@@ -17,32 +17,49 @@ export default function Table({ data, columns, headers }) {
   if (!Array.isArray(headers)) {
     headers = columns;
   }
-  // function - processor for filter/sort data and create new currentData to display
 
+  // sort data by some field.
+  const sortData = (objArray, field, asc) => {
+    return objArray.sort((a, b) => {
+      //debugger;
+      let aValue = a[field], bValue = b[field];
+      //console.log(`  sort by ${field}: a=${aValue}, b=${bValue}  types: ${typeof aValue}/${typeof bValue}`);
+      if (typeof aValue === 'number') {
+        return asc ? aValue - bValue : bValue - aValue;
+      } else if (typeof aValue === 'string') {
+        return asc ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue)
+      } else {
+        console.log('err: pass ', typeof aValue)
+        return 0;
+      }
+    })
+  }
 
+  const obj2str = (obj) => {
+    return Object.values(obj).join('');
+  }
 
-  // state for active dataset to show in table
-  const [currentData, setSurrentData] = useState(data);
   // state for sorting
   const [sortBy, setSortBy] = useState(columns[0]);
   const [sortAsc, setSortAsc] = useState(true);
+  // state for active dataset to show in table
+  const [currentData, setSurrentData] = useState(sortData(data, sortBy, sortAsc));
 
-  // main handler
-  const clickHandler = (event) => {
-    const target = event.target;
-    const parent = target.parentNode;
-    console.log(target, parent);
-  }
-  // click on headers
-  const handleHeaderClick = (event, col) => {
-    let el = event.currentTarget;
-    console.log(' click on ', el, col);
-    // find inner img
-    let img = el.childNodes;
-    console.log('  child=', img);
+  // filter & sort in useEffect
+  useEffect(() => {
+    let sortedData = sortData(currentData, sortBy, sortAsc);
+    console.log('useEffect() sorted:', sortBy, sortedData);
+    setSurrentData(sortedData);
+
+  }, [currentData, sortBy, sortAsc])
+
+  // click on headers - switch sorting
+  const handleHeaderClick = (col) => {
     setSortBy(col);
     setSortAsc(!sortAsc);
   }
+
+
 
   return (
     <table className="table table-hover table-bordered">
@@ -55,7 +72,7 @@ export default function Table({ data, columns, headers }) {
                 sortIcon = sortAsc ? sortIconUp : sortIconDown;
               }
               return <th
-                onClick={(e) => handleHeaderClick(e, columns[i], `sort`)}
+                onClick={(e) => handleHeaderClick(columns[i])}
                 scope="col"
                 key={h}>{h}
                 <img src={sortIcon} id={columns[i]} alt={`Sort by ${headers[i]}`} className="sortSign" />
@@ -67,8 +84,8 @@ export default function Table({ data, columns, headers }) {
       </thead>
       <tbody>
         {currentData.map((item, i) =>
-          <tr key={i}>
-            {columns.map((col, j) => <td key={i + "_" + j}>{item[col]}</td>)}
+          <tr key={obj2str(item)}>
+            {columns.map((col) => <td key={col}>{item[col]}</td>)}
           </tr>
         )
         }
