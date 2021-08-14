@@ -48,7 +48,7 @@ export default function Table({ data, columns, headers }) {
   // filter & sort in useEffect
   useEffect(() => {
     let sortedData = sortData(currentData, sortBy, sortAsc);
-    console.log('useEffect() sorted:', sortBy, sortedData);
+    //console.log('useEffect() sorted:', sortBy, sortedData);
     setSurrentData(sortedData);
 
   }, [currentData, sortBy, sortAsc])

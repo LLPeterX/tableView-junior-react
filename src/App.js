@@ -4,6 +4,7 @@ import Table from "./components/Table";
 import Loader from 'react-loader-spinner';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import './app.css';
+import Options from "./components/Options";
 
 
 
@@ -17,18 +18,25 @@ function App() {
 
   // fetch data from www.filltext.com
   useEffect(() => {
+    console.log(' App:useEffect volume=', volume);
     const baseURL = `http://www.filltext.com/?rows=${volume}&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}`;
     axios.get(baseURL)
       .then(response => {
-        //console.log(response.data);
+        console.log('after fetch: ', response.data.length);
         setPeople(response.data);
         setIsLoading(false);
       })
   }, [volume]);
 
+  const handleChangeVolume = (vol) => {
+    console.log(' handleChangeVolume:', vol);
+    setVolume(vol || 50);
+  }
+
 
   return (
     <div className="container">
+      <Options volume={volume} setVolume={handleChangeVolume} />
       {isLoading ?
         <Loader
           className="centered"
