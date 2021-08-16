@@ -5,6 +5,7 @@ import Loader from 'react-loader-spinner';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import './app.css';
 import Options from "./components/Options";
+import ReactPaginate from "react-paginate";
 
 function App() {
   const volumes = [5, 10];
@@ -58,12 +59,15 @@ function App() {
           width={100}
         />
         :
-        <Table
-          data={people}
-          columns={["id", "firstName", "lastName", "email", "phone"]}
-          headers={["#", "Имя", "Фамилия", "Почта", "Телефон"]}
-          filter={filter}
-        />
+        <React.Fragment>
+          <Table
+            data={people}
+            columns={["id", "firstName", "lastName", "email", "phone"]}
+            headers={["#", "Имя", "Фамилия", "Почта", "Телефон"]}
+            filter={filter}
+          />
+          <ReactPaginate />
+        </React.Fragment>
       }
     </div>
   );
