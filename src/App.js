@@ -20,12 +20,10 @@ function App() {
   // fetch data from www.filltext.com
   useEffect(() => {
     async function fetchData() {
-      console.log(' App:useEffect volume=', volume);
       const baseURL = `http://www.filltext.com/?rows=${volume}&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}`;
       const response = await fetch(baseURL);
       if (response.ok) {
         let data = await response.json();
-        console.log(`received ${data.length} records`, data);
         setPeople(data);
       }
       setIsLoading(false);
@@ -36,12 +34,10 @@ function App() {
   }, [volume]);
 
   const handleChangeVolume = (vol) => {
-    console.log(' handleChangeVolume:', vol);
     setVolume(vol || 50);
   }
 
   const handleSetFilter = (str) => {
-    console.log('App.handleSetFilter', str);
     setFilter(str);
   }
 

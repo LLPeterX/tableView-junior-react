@@ -10,7 +10,6 @@ function Options({ volumes, volume, setVolume, filter, setFilter }) {
   const [inputTimerId, setInputTimerId] = useState(null);
 
   const handleChangeVolume = (e) => {
-    console.log(e.target.value, typeof setVolume);
     setcurrentVolume(+e.target.value);
     setVolume(+e.target.value);
   }
@@ -33,7 +32,7 @@ function Options({ volumes, volume, setVolume, filter, setFilter }) {
       }, INPUT_TIMEOUT),
     );
 
-    return () => clearTimeout(inputTimerId);
+    return () => clearTimeout(inputTimerId); // eslint-disable-next-line
   }, [currentFilter]);
 
 

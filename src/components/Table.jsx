@@ -19,8 +19,9 @@ export default function Table({ data, columns, headers, filter = "" }) {
   const sortData = (objArray, field, asc = true, filterStr = "") => {
     let filtered = objArray;
     if (filterStr && filterStr.length) {
-      filtered = objArray.filter(item => obj2str(item).toLowerCase().includes(filterStr.toLowerCase()));
-      console.log(` sortData: filter=[${filterStr}] out len=${filtered.length}`);
+      let lw = filterStr.toLowerCase();
+      filtered = objArray.filter(item => obj2str(item, columns).indexOf(lw) >= 0);
+      //console.log(` sortData: filter=[${filterStr}] out len=${filtered.length}\nO2S=${obj2str(objArray[0], columns)}`);
     } else {
       filtered = objArray;
     }
@@ -38,8 +39,17 @@ export default function Table({ data, columns, headers, filter = "" }) {
   }
 
   // convert object to string (for search etc.)
-  const obj2str = (obj) => {
-    return Object.values(obj).join('');
+  //   obj: object
+  //   fields: array of properties of object obj
+  const obj2str = (obj, fields = null) => {
+    let oStr;
+    if (!fields || fields === columns) {
+      oStr = Object.values(obj).join('');
+    } else {
+      let properties = Object.keys(obj).filter(p => fields.includes(p));
+      oStr = properties.reduce((str, p) => str + obj[p], "");
+    }
+    return oStr.toLowerCase();
   }
 
   // state for sorting
@@ -51,9 +61,9 @@ export default function Table({ data, columns, headers, filter = "" }) {
   //redraw Table when change sort or filter
   useEffect(() => {
     let sortedData = sortData(data, sortBy, sortAsc, filter);
-    console.log('Table useEffect() sorted:', sortBy, sortAsc, filter);
+    //console.log('Table useEffect() sorted:', sortBy, sortAsc, filter);
     setSurrentData(sortedData);
-
+    // eslint-disable-next-line
   }, [sortBy, sortAsc, filter])
 
   // click on headers - switch sorting
@@ -91,7 +101,7 @@ export default function Table({ data, columns, headers, filter = "" }) {
       </thead>
       <tbody>
         {currentData.map((item, i) =>
-          <tr key={obj2str(item)}>
+          <tr key={obj2str(item, columns)}>
             {columns.map((col) => <td key={col}>{item[col]}</td>)}
           </tr>
         )
