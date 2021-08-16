@@ -48,15 +48,19 @@ export default function Table({ data, columns, headers }) {
   // filter & sort in useEffect -- вообще не вызывается (?)
   useEffect(() => {
     let sortedData = sortData(currentData, sortBy, sortAsc);
-    console.log('Table useEffect() sorted:', sortBy, sortedData.length);
+    console.log('Table useEffect() sorted:', sortBy, sortAsc, sortedData.length);
     setSurrentData(sortedData);
 
   }, [currentData, sortBy, sortAsc])
 
   // click on headers - switch sorting
   const handleHeaderClick = (col) => {
-    setSortBy(col);
-    setSortAsc(!sortAsc);
+    if (sortBy !== col) {
+      setSortBy(col);
+    } else {
+      setSortBy(col);
+      setSortAsc(!sortAsc);
+    }
   }
 
 
