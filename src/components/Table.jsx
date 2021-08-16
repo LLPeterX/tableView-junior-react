@@ -4,7 +4,7 @@ import sortIconDown from '../assets/icons/sort_down_icon.svg';
 import sortIconNone from '../assets/icons/sort_none_icon.svg'
 import './table.css'
 
-export default function Table({ data, columns, headers }) {
+export default function Table({ data, columns, headers, filter = "" }) {
   if (!data) {
     data = [{ id: 0 }];
   }
@@ -16,8 +16,15 @@ export default function Table({ data, columns, headers }) {
   }
 
   // sort data by some field.
-  const sortData = (objArray, field, asc) => {
-    return objArray.sort((a, b) => {
+  const sortData = (objArray, field, asc = true, filterStr = "") => {
+    let filtered = objArray;
+    if (filterStr && filterStr.length) {
+      filtered = objArray.filter(item => obj2str(item).toLowerCase().includes(filterStr.toLowerCase()));
+      console.log(` sortData: filter=[${filterStr}] out len=${filtered.length}`);
+    } else {
+      filtered = objArray;
+    }
+    return filtered.sort((a, b) => {
       let aValue = a[field], bValue = b[field];
       if (typeof aValue === 'number') {
         return asc ? aValue - bValue : bValue - aValue;
@@ -27,10 +34,10 @@ export default function Table({ data, columns, headers }) {
         console.log('err: pass ', typeof aValue)
         return 0;
       }
-    })
+    });
   }
 
-
+  // convert object to string (for search etc.)
   const obj2str = (obj) => {
     return Object.values(obj).join('');
   }
@@ -39,16 +46,15 @@ export default function Table({ data, columns, headers }) {
   const [sortBy, setSortBy] = useState(columns[0]);
   const [sortAsc, setSortAsc] = useState(true);
   // state for active dataset to show in table
-  const [currentData, setSurrentData] = useState(sortData(data, sortBy, sortAsc));
-  // state for filter
-  const [filter, setFilter] = useState("");
+  const [currentData, setSurrentData] = useState(sortData(data, sortBy, sortAsc, filter));
 
+  //redraw Table when change sort or filter
   useEffect(() => {
-    let sortedData = sortData(currentData, sortBy, sortAsc);
-    console.log('Table useEffect() sorted:', sortBy, sortAsc, sortedData.length);
+    let sortedData = sortData(data, sortBy, sortAsc, filter);
+    console.log('Table useEffect() sorted:', sortBy, sortAsc, filter);
     setSurrentData(sortedData);
 
-  }, [currentData, sortBy, sortAsc])
+  }, [sortBy, sortAsc, filter])
 
   // click on headers - switch sorting
   const handleHeaderClick = (col) => {

@@ -6,8 +6,6 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import './app.css';
 import Options from "./components/Options";
 
-
-
 function App() {
   const volumes = [5, 10];
   //state to hold received data
@@ -16,6 +14,8 @@ function App() {
   const [volume, setVolume] = useState(volumes[0]);
   // state for loading
   const [isLoading, setIsLoading] = useState(true);
+  // state for filter
+  const [filter, setFilter] = useState("");
 
   // fetch data from www.filltext.com
   useEffect(() => {
@@ -40,10 +40,19 @@ function App() {
     setVolume(vol || 50);
   }
 
+  const handleSetFilter = (str) => {
+    console.log('App.handleSetFilter', str);
+    setFilter(str);
+  }
+
 
   return (
     <div className="container">
-      <Options volumes={volumes} volume={volume} setVolume={handleChangeVolume} />
+      <Options
+        volumes={volumes} volume={volume} setVolume={handleChangeVolume}
+        filter={filter}
+        setFilter={handleSetFilter}
+      />
       {isLoading ?
         <Loader
           className="centered"
@@ -57,6 +66,7 @@ function App() {
           data={people}
           columns={["id", "firstName", "lastName", "email", "phone"]}
           headers={["#", "Имя", "Фамилия", "Почта", "Телефон"]}
+          filter={filter}
         />
       }
     </div>

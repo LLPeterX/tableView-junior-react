@@ -1,14 +1,42 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
-function Options({ volumes, volume, setVolume }) {
+const INPUT_TIMEOUT = 300;
+
+function Options({ volumes, volume, setVolume, filter, setFilter }) {
 
   const [currentVolume, setcurrentVolume] = useState(volume);
+  const [currentFilter, setCurrentFilter] = useState(filter);
+  // state for timer for enter filter string. filter value will pass up to App after 300 ms after incativity
+  const [inputTimerId, setInputTimerId] = useState(null);
 
   const handleChangeVolume = (e) => {
     console.log(e.target.value, typeof setVolume);
     setcurrentVolume(+e.target.value);
     setVolume(+e.target.value);
   }
+
+  const handleChangeFilter = (e) => {
+    if (e) {
+      let filterStr = e.target.value.trim();
+      setCurrentFilter(filterStr);
+    }
+  }
+
+  useEffect(() => {
+    if (inputTimerId) {
+      clearTimeout(inputTimerId);
+    }
+
+    setInputTimerId(
+      setTimeout(() => {
+        setFilter(currentFilter);
+      }, INPUT_TIMEOUT),
+    );
+
+    return () => clearTimeout(inputTimerId);
+  }, [currentFilter]);
+
+
   return (
     <div className="row justify-content-between">
       <div>Объем данных</div>
@@ -25,22 +53,14 @@ function Options({ volumes, volume, setVolume }) {
           )
         }
       </div>
-      {/* <input type="radio" className="btn-check" name="vol" id={"vol" + v} checked={currentVolume === v} value={v} 
-          //   // onClick={handleChangeVolume}
-          //           onChange={(e) => console.log(e)}
-          // />
-          // <label className="btn btn-outline-primary" htmlFor="vol50">50</label>
-      //   <label className="btn btn-outline-primary" htmlFor="vol50">50</label>
-
-      //   <input type="radio" className="radio btn-check" name="vol" id="vol1000" checked={currentVolume === 1000} value="10"
-      //     //onClick={handleChangeVolume}
-      //     onChange={(e) => console.log(e)}
-      //   />
-      //   <label className="btn btn-outline-primary" htmlFor="vol1000">1000</label>
-      // </div>
-      */}
       <div className="btn-group col-4">
-        <input type="text" className="form-control" id="filter" />
+        <input
+          type="text"
+          className="form-control"
+          id="filter"
+          value={currentFilter}
+          onChange={handleChangeFilter}
+        />
         <button type="button" className="btn btn-primary">Найти</button>
       </div>
     </div>
