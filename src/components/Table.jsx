@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from 'react'
-//import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-//import { faSortUp } from '@fortawesome/free-solid-svg-icons'
-//import sortIcon from '../assets/icons/icons8-sort-down-50.png';
 import sortIconUp from '../assets/icons/sort_up_icon.svg';
 import sortIconDown from '../assets/icons/sort_down_icon.svg';
 import sortIconNone from '../assets/icons/sort_none_icon.svg'
@@ -21,9 +18,7 @@ export default function Table({ data, columns, headers }) {
   // sort data by some field.
   const sortData = (objArray, field, asc) => {
     return objArray.sort((a, b) => {
-      //debugger;
       let aValue = a[field], bValue = b[field];
-      //console.log(`  sort by ${field}: a=${aValue}, b=${bValue}  types: ${typeof aValue}/${typeof bValue}`);
       if (typeof aValue === 'number') {
         return asc ? aValue - bValue : bValue - aValue;
       } else if (typeof aValue === 'string') {
@@ -35,6 +30,7 @@ export default function Table({ data, columns, headers }) {
     })
   }
 
+
   const obj2str = (obj) => {
     return Object.values(obj).join('');
   }
@@ -44,8 +40,9 @@ export default function Table({ data, columns, headers }) {
   const [sortAsc, setSortAsc] = useState(true);
   // state for active dataset to show in table
   const [currentData, setSurrentData] = useState(sortData(data, sortBy, sortAsc));
+  // state for filter
+  const [filter, setFilter] = useState("");
 
-  // filter & sort in useEffect -- вообще не вызывается (?)
   useEffect(() => {
     let sortedData = sortData(currentData, sortBy, sortAsc);
     console.log('Table useEffect() sorted:', sortBy, sortAsc, sortedData.length);
