@@ -7,3 +7,34 @@
 .sortDown {
   transform: rotate(180deg);
 }
+
+.pagination {
+  display: flex;
+  /* justify-content: space-between; */
+  list-style: none;
+  cursor: pointer;
+  
+}
+
+.pagination a {
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #6c7ac9;
+  color: #6c7ac9;
+  margin-right: 10px;
+  text-decoration: none;
+}
+
+.pagination__link {
+  font-weight: bold;
+}
+
+.pagination__link--active a {
+  color: #fff;
+  background: #6c7ac9;
+}
+
+.pagination__link--disabled a {
+  color: rgb(198, 197, 202);
+  border: 1px solid rgb(198, 197, 202);
+}

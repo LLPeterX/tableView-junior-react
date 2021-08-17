@@ -5,10 +5,10 @@ import Loader from 'react-loader-spinner';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import './app.css';
 import Options from "./components/Options";
-import ReactPaginate from "react-paginate";
+import { DATA_VOLUMES, ROWS_PER_PAGE } from './constants'
 
 function App() {
-  const volumes = [5, 10];
+  const volumes = DATA_VOLUMES || [5, 10];
   //state to hold received data
   const [people, setPeople] = useState([]);
   // state to switch URL. default 50 (50 - small; 1000 - big)
@@ -65,8 +65,8 @@ function App() {
             columns={["id", "firstName", "lastName", "email", "phone"]}
             headers={["#", "Имя", "Фамилия", "Почта", "Телефон"]}
             filter={filter}
+            rowsPerPage={ROWS_PER_PAGE || 50}
           />
-          <ReactPaginate />
         </React.Fragment>
       }
     </div>

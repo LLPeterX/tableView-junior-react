@@ -3,8 +3,9 @@ import sortIconUp from '../assets/icons/sort_up_icon.svg';
 import sortIconDown from '../assets/icons/sort_down_icon.svg';
 import sortIconNone from '../assets/icons/sort_none_icon.svg'
 import './table.css'
+import ReactPaginate from 'react-paginate';
 
-export default function Table({ data, columns, headers, filter = "" }) {
+export default function Table({ data, columns, headers, filter, rowsPerPage }) {
   if (!data) {
     data = [{ id: 0 }];
   }
@@ -14,6 +15,7 @@ export default function Table({ data, columns, headers, filter = "" }) {
   if (!Array.isArray(headers)) {
     headers = columns;
   }
+  if (!filter) filter = "";
 
   // sort data by some field.
   const sortData = (objArray, field, asc = true, filterStr = "") => {
@@ -21,7 +23,6 @@ export default function Table({ data, columns, headers, filter = "" }) {
     if (filterStr && filterStr.length) {
       let lw = filterStr.toLowerCase();
       filtered = objArray.filter(item => obj2str(item, columns).indexOf(lw) >= 0);
-      //console.log(` sortData: filter=[${filterStr}] out len=${filtered.length}\nO2S=${obj2str(objArray[0], columns)}`);
     } else {
       filtered = objArray;
     }
@@ -39,7 +40,7 @@ export default function Table({ data, columns, headers, filter = "" }) {
   }
 
   // convert object to string (for search etc.)
-  //   obj: object
+  //   obj: an object
   //   fields: array of properties of object obj
   const obj2str = (obj, fields = null) => {
     let oStr;
@@ -55,16 +56,26 @@ export default function Table({ data, columns, headers, filter = "" }) {
   // state for sorting
   const [sortBy, setSortBy] = useState(columns[0]);
   const [sortAsc, setSortAsc] = useState(true);
+  const [currentFilter, setCurrentFilter] = useState(filter);
   // state for active dataset to show in table
   const [currentData, setSurrentData] = useState(sortData(data, sortBy, sortAsc, filter));
+  //state for pagination
+  const [currentPage, setCurrentPage] = useState(0);
+  const [pages, setPages] = useState(0);
 
   //redraw Table when change sort or filter
   useEffect(() => {
     let sortedData = sortData(data, sortBy, sortAsc, filter);
-    //console.log('Table useEffect() sorted:', sortBy, sortAsc, filter);
-    setSurrentData(sortedData);
+    const offset = currentPage * rowsPerPage;
+    console.log('Table useEffect() sorted:', sortBy, sortAsc, filter);
+    setPages(Math.ceil(sortedData.length / rowsPerPage));
+    setSurrentData(sortedData.slice(offset, offset + rowsPerPage));
     // eslint-disable-next-line
-  }, [sortBy, sortAsc, filter])
+  }, [sortBy, sortAsc, filter, currentPage]);
+
+  useEffect(() => {
+    console.log('change filter to=', filter, currentFilter);
+  }, [filter]);
 
   // click on headers - switch sorting
   const handleHeaderClick = (col) => {
@@ -76,38 +87,57 @@ export default function Table({ data, columns, headers, filter = "" }) {
     }
   }
 
+  const handleSelectPage = (e) => {
+    setCurrentPage(e.selected)
+  }
 
 
   return (
-    <table className="table table-hover table-bordered">
-      <thead>
-        <tr>
-          {
-            headers.map((h, i) => {
-              let sortIcon = sortIconNone;
-              if (columns[i] === sortBy) {
-                sortIcon = sortAsc ? sortIconUp : sortIconDown;
-              }
-              return <th
-                onClick={(e) => handleHeaderClick(columns[i])}
-                scope="col"
-                key={h}>{h}
-                <img src={sortIcon} id={columns[i]} alt={`Sort by ${headers[i]}`} className="sortSign" />
+    <div>
+      <table className="table table-hover table-bordered">
+        <thead>
+          <tr>
+            {
+              headers.map((h, i) => {
+                let sortIcon = sortIconNone;
+                if (columns[i] === sortBy) {
+                  sortIcon = sortAsc ? sortIconUp : sortIconDown;
+                }
+                return <th
+                  onClick={(e) => handleHeaderClick(columns[i])}
+                  scope="col"
+                  key={h}>{h}
+                  <img src={sortIcon} id={columns[i]} alt={`Sort by ${headers[i]}`} className="sortSign" />
 
-              </th>
-            })
-          }
-        </tr>
-      </thead>
-      <tbody>
-        {currentData.map((item, i) =>
-          <tr key={obj2str(item, columns)}>
-            {columns.map((col) => <td key={col}>{item[col]}</td>)}
+                </th>
+              })
+            }
           </tr>
-        )
-        }
-      </tbody>
-    </table>)
+        </thead>
+        <tbody>
+          {currentData.map((item, i) =>
+            <tr key={obj2str(item, columns)}>
+              {columns.map((col) => <td key={col}>{item[col]}</td>)}
+            </tr>
+          )
+          }
+        </tbody>
+      </table>
+      {pages > 1 && <ReactPaginate
+        pageCount={pages}
+        // pageRangeDisplayed={20}
+        marginPagesDisplayed={3}
+        onPageChange={handleSelectPage}
+        previousLabel="Prev"
+        nextLabel="Next"
+        containerClassName={"pagination"}
+        previousLinkClassName={"pagination__link"}
+        nextLinkClassName={"pagination__link"}
+        disabledClassName={"pagination__link--disabled"}
+        activeClassName={"pagination__link--active"}
+      />}
+    </div>
+  )
 }
 
 
