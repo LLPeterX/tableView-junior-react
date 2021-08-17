@@ -4,7 +4,7 @@ import TableView from "./components/TableView";
 import Loader from './components/Loader'
 
 function App() {
-  const BASE_URL = 'http://www.filltext.com/?rows=10&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone}&address={addressObject}&description={lorem|32}';
+  const BASE_URL = 'http://www.filltext.com/?rows=100&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone}&address={addressObject}&description={lorem|32}';
 
   // state for data
   const [smallData, setSmallData] = useState([]);
