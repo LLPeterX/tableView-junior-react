@@ -44,7 +44,7 @@ export default function Table({ data, columns, headers, filter, rowsPerPage }) {
   //   fields: array of properties of object obj
   const obj2str = (obj, fields = null) => {
     let oStr;
-    if (!fields || fields === columns) {
+    if (!fields) {
       oStr = Object.values(obj).join('');
     } else {
       let properties = Object.keys(obj).filter(p => fields.includes(p));
@@ -56,7 +56,6 @@ export default function Table({ data, columns, headers, filter, rowsPerPage }) {
   // state for sorting
   const [sortBy, setSortBy] = useState(columns[0]);
   const [sortAsc, setSortAsc] = useState(true);
-  const [currentFilter, setCurrentFilter] = useState(filter);
   // state for active dataset to show in table
   const [currentData, setSurrentData] = useState(sortData(data, sortBy, sortAsc, filter));
   //state for pagination
@@ -72,10 +71,6 @@ export default function Table({ data, columns, headers, filter, rowsPerPage }) {
     setSurrentData(sortedData.slice(offset, offset + rowsPerPage));
     // eslint-disable-next-line
   }, [sortBy, sortAsc, filter, currentPage]);
-
-  useEffect(() => {
-    console.log('change filter to=', filter, currentFilter);
-  }, [filter]);
 
   // click on headers - switch sorting
   const handleHeaderClick = (col) => {
@@ -126,7 +121,7 @@ export default function Table({ data, columns, headers, filter, rowsPerPage }) {
       {pages > 1 && <ReactPaginate
         pageCount={pages}
         // pageRangeDisplayed={20}
-        marginPagesDisplayed={3}
+        marginPagesDisplayed={4}
         onPageChange={handleSelectPage}
         previousLabel="Prev"
         nextLabel="Next"
