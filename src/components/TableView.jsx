@@ -15,7 +15,7 @@ export default function TableView(props) {
       <tbody>
         {
           props.smallData.map(item =>
-            <tr>
+            <tr key={item.id + item.email}>
               <th scope="row">{item.id}</th>
               <td>{item.firstName}</td>
               <td>{item.lastName}</td>
