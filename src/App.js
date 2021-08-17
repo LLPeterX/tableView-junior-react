@@ -16,13 +16,20 @@ function App() {
       setSmallData(res.data);
       setIsLoading(false);
     })
-  }, [])
+  }, []);
+
+  const sortData = (sortBy) => {
+    console.log(' sorting on', sortBy);
+  }
 
   return (
     <div className="container">
       {isLoading
         ? <Loader />
-        : <TableView smallData={smallData} />
+        : <TableView
+          contactData={smallData}
+          sortData={sortData}
+        />
       }
     </div>
   );
