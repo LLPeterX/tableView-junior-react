@@ -20,8 +20,8 @@ export default function TableView({ contactData, sortData }) {
               <th scope="row">{item.id}</th>
               <td>{item.firstName}</td>
               <td>{item.lastName}</td>
-              <td>{item.phone}</td>
               <td>{item.email}</td>
+              <td>{item.phone}</td>
             </tr>
           )
         }
