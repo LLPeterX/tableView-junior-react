@@ -10,6 +10,8 @@ function App() {
   const [smallData, setSmallData] = useState([]);
   //state for loading data
   const [isLoading, setIsLoading] = useState(true);
+  // state for sort
+  const [sortDirection, setSortDirection] = useState(true);
 
   useEffect(() => {
     axios.get(BASE_URL).then(res => {
@@ -19,16 +21,17 @@ function App() {
   }, []);
 
   const sortData = (sortBy) => {
-    console.log(' Sort by', sortBy);
+    console.log(' Sort by', sortBy, sortDirection);
     let sortedData = [...smallData].sort((a, b) => {
       let aValue = a[sortBy], bValue = b[sortBy];
       if (typeof aValue === 'number') {
-        return aValue - bValue;
+        return sortDirection ? aValue - bValue : bValue - aValue
       } else {
-        return aValue.localeCompare(bValue);
+        return sortDirection ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
       }
     });
     setSmallData(sortedData);
+    setSortDirection(!sortDirection);
   }
 
   return (
