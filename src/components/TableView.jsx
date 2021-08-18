@@ -1,18 +1,46 @@
-import React from 'react'
+import React, { useState } from 'react'
 import upImg from '../assets/icons/arrow-up-square.svg'
 import downImg from '../assets/icons/arrow-down-square.svg'
+import './tableView.css'
 
-export default function TableView({ contactData, sortData }) {
+export default function TableView({ contactData, sortData, sortDirection }) {
+
+  const [sortField, setSortField] = useState("id");
+
+  const handleSort = (field) => {
+    sortData(field);
+    setSortField(field);
+  }
 
   return (
     <table className="table">
       <thead>
         <tr>
-          <th scope="col" onClick={() => sortData('id')}>id <img src={upImg} /></th>
-          <th scope="col" onClick={() => sortData('firstName')}>firstName  <i className="bi bi-arrow-down-square"></i></th>
-          <th scope="col" onClick={() => sortData('lastName')}>lastName</th>
-          <th scope="col" onClick={() => sortData('email')}>email</th>
-          <th scope="col" onClick={() => sortData('phone')}>phone</th>
+          <th scope="col" onClick={() => handleSort('id')}>id
+            {
+              sortField === 'id' && <img src={sortDirection ? upImg : downImg} alt="Sort sign" className="sortSign" />
+            }
+          </th>
+          <th scope="col" onClick={() => handleSort('firstName')}>firstName
+            {
+              sortField === 'firstName' && <img src={sortDirection ? upImg : downImg} alt="Sort sign" className="sortSign" />
+            }
+          </th>
+          <th scope="col" onClick={() => handleSort('lastName')}>lastName
+            {
+              sortField === 'lastName' && <img src={sortDirection ? upImg : downImg} alt="Sort sign" className="sortSign" />
+            }
+          </th>
+          <th scope="col" onClick={() => handleSort('email')}>email
+            {
+              sortField === 'email' && <img src={sortDirection ? upImg : downImg} alt="Sort sign" className="sortSign" />
+            }
+          </th>
+          <th scope="col" onClick={() => handleSort('phone')}>phone
+            {
+              sortField === 'phone' && <img src={sortDirection ? upImg : downImg} alt="Sort sign" className="sortSign" />
+            }
+          </th>
         </tr>
       </thead>
       <tbody>

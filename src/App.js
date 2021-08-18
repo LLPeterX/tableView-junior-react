@@ -41,6 +41,7 @@ function App() {
         : <TableView
           contactData={smallData}
           sortData={sortData}
+          sortDirection={sortDirection}
         />
       }
     </div>
