@@ -3,7 +3,7 @@ import './details.css'
 
 export default function Details({ row }) {
   return (
-    <div className="container">
+    <div className="container border border-info pe-10">
       <b>Подробная информация</b>
       <ul>
         <li>id: <span>{row.id}</span></li>
@@ -13,13 +13,17 @@ export default function Details({ row }) {
         <li>Phone: <span>{row.phone}</span></li>
         <li>Address:
           <ul>
-            <li>Почтовый индекс: </li>
-            <li>Штат: </li>
+            <li>Street Address: <span>{row.address?.streetAddress || ''}</span> </li>
+            <li>City: <span>{row.address?.city || ''}</span> </li>
+            <li>State: <span>{row.address?.state || ''}</span> </li>
+            <li>ZIP: <span>{row.address?.zip || ''}</span> </li>
           </ul>
 
         </li>
-
       </ul>
+      <div>
+        {row.description}
+      </div>
 
     </div>
   )
