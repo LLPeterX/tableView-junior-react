@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import TableView from "./components/TableView";
 import Loader from './components/Loader'
+import Details from "./components/Details";
 
 function App() {
   const BASE_URL = 'http://www.filltext.com/?rows=10&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone}&address={addressObject}&description={lorem|32}';
@@ -12,6 +13,8 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   // state for sort
   const [sortDirection, setSortDirection] = useState(true);
+  // current object to display
+  const [row, setRow] = useState(null);
 
   useEffect(() => {
     axios.get(BASE_URL).then(res => {
@@ -35,7 +38,7 @@ function App() {
   }
   // handle cell click
   const handleCellClick = (obj) => {
-    console.log(obj);
+    setRow(obj);
   }
 
 
@@ -50,6 +53,7 @@ function App() {
           handleCellClick={handleCellClick}
         />
       }
+      {row && <Details row={row} />}
     </div>
   );
 }
