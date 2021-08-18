@@ -33,6 +33,11 @@ function App() {
     setSmallData(sortedData);
     setSortDirection(!sortDirection);
   }
+  // handle cell click
+  const handleCellClick = (obj) => {
+    console.log(obj);
+  }
+
 
   return (
     <div className="container">
@@ -42,6 +47,7 @@ function App() {
           contactData={smallData}
           sortData={sortData}
           sortDirection={sortDirection}
+          handleCellClick={handleCellClick}
         />
       }
     </div>

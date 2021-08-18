@@ -3,7 +3,7 @@ import upImg from '../assets/icons/arrow-up-square.svg'
 import downImg from '../assets/icons/arrow-down-square.svg'
 import './tableView.css'
 
-export default function TableView({ contactData, sortData, sortDirection }) {
+export default function TableView({ contactData, sortData, sortDirection, handleCellClick }) {
 
   const [sortField, setSortField] = useState("id");
 
@@ -11,6 +11,7 @@ export default function TableView({ contactData, sortData, sortDirection }) {
     sortData(field);
     setSortField(field);
   }
+
 
   return (
     <table className="table">
@@ -46,7 +47,7 @@ export default function TableView({ contactData, sortData, sortDirection }) {
       <tbody>
         {
           contactData.map(item =>
-            <tr key={item.id + item.email}>
+            <tr key={item.id + item.email} onClick={() => handleCellClick(item)}>
               <th scope="row">{item.id}</th>
               <td>{item.firstName}</td>
               <td>{item.lastName}</td>
