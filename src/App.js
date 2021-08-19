@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 //import axios from "axios";
 import TableView from "./components/TableView";
 import Loader from './components/Loader'
 import Details from "./components/Details";
 import { useServerData } from './hooks/useServerData'
+import Switcher from "./components/Switcher";
 
 function App() {
   const BASE_URL = 'http://www.filltext.com/?rows=10&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone}&address={addressObject}&description={lorem|32}';
@@ -16,9 +17,15 @@ function App() {
   const [sortDirection, setSortDirection] = useState(true);
   // current object to display
   const [row, setRow] = useState(null);
+  // state for switch data volume
+  const [isButtonClick, setButtonClick] = useState(false);
+  // state for URL
+  const [url, setUrl] = useState(BASE_URL);
 
   //using hook useServerData
-  const [{ contactData, setContactData, isLoading }, getData] = useServerData(BASE_URL);
+  const [{ contactData, setContactData, isLoading }, getData] = useServerData(url, isButtonClick);
+
+
 
   // useEffect(() => {
   //   axios.get(BASE_URL).then(res => {
@@ -47,9 +54,17 @@ function App() {
     setRow(obj);
   }
 
+  // handle click on button of data volume
+  const buttonHandler = (url) => {
+    setButtonClick(!isButtonClick);
+    setUrl(url);
+    console.log(' press vol chanmge:', url);
+  }
+
 
   return (
     <div className="container">
+      <Switcher isButtonClick={isButtonClick} buttonHandler={buttonHandler} />
       {isLoading
         ? <Loader />
         : <TableView

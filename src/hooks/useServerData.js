@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from "axios";
 
-export const useServerData = (url) => {
+export const useServerData = (url, isButtonClick) => {
   const [contactData, setContactData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -16,7 +16,6 @@ export const useServerData = (url) => {
   // variant with useEffect()
 
   const getData = () => { }
-
   useEffect(() => {
     axios.get(url).then(res => {
       setContactData(res.data);
