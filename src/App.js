@@ -5,9 +5,10 @@ import Loader from './components/Loader'
 import Details from "./components/Details";
 import { useServerData } from './hooks/useServerData'
 import Switcher from "./components/Switcher";
+import { DATA_VOLUMES } from './constants'
 
 function App() {
-  const BASE_URL = 'http://www.filltext.com/?rows=10&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone}&address={addressObject}&description={lorem|32}';
+  //const BASE_URL = 'http://www.filltext.com/?rows=10&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone}&address={addressObject}&description={lorem|32}';
 
   // state for data
   //const [, setSmallData] = useState([]);
@@ -20,10 +21,11 @@ function App() {
   // state for switch data volume
   const [isButtonClick, setButtonClick] = useState(false);
   // state for URL
-  const [url, setUrl] = useState(BASE_URL);
-
+  //const [url, setUrl] = useState(BASE_URL);
+  // data volume
+  const [volume, setVolume] = useState(DATA_VOLUMES[0])
   //using hook useServerData
-  const [{ contactData, setContactData, isLoading }, getData] = useServerData(url, isButtonClick);
+  const [{ contactData, setContactData, isLoading }, getData] = useServerData(volume);
 
 
 
@@ -55,10 +57,11 @@ function App() {
   }
 
   // handle click on button of data volume
-  const buttonHandler = (url) => {
-    setButtonClick(!isButtonClick);
-    setUrl(url);
-    console.log(' press vol chanmge:', url);
+  const buttonHandler = (v) => {
+    if (v !== volume) {
+      setRow(null);
+    }
+    setVolume(v);
   }
 
 
