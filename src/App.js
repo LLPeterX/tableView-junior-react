@@ -39,9 +39,9 @@ function App() {
 
   // handle click on button of data volume
   const buttonHandler = (v) => {
-    // if (v !== volume) {
-    //   setRow(null);
-    // }
+    if (v !== volume) {
+      setRow(null);
+    }
     setVolume(v);
   }
 
