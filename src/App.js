@@ -19,7 +19,7 @@ function App() {
   // current object to display
   const [row, setRow] = useState(null);
   // state for switch data volume
-  const [isButtonClick, setButtonClick] = useState(false);
+  //const [isButtonClick, setButtonClick] = useState(false);
   // state for URL
   //const [url, setUrl] = useState(BASE_URL);
   // data volume
@@ -67,7 +67,7 @@ function App() {
 
   return (
     <div className="container">
-      <Switcher isButtonClick={isButtonClick} buttonHandler={buttonHandler} />
+      <Switcher volume={volume} buttonHandler={buttonHandler} />
       {isLoading
         ? <Loader />
         : <TableView
