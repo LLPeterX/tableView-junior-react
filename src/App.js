@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 //import axios from "axios";
-import TableView from "./components/TableView";
-import Loader from './components/Loader'
-import Details from "./components/Details";
+// import TableView from "./components/TableView";
+// import Loader from './components/Loader'
+// import Details from "./components/Details";
 import { useServerData } from './hooks/useServerData'
 import Switcher from "./components/Switcher";
 import { DATA_VOLUMES } from './constants'
+import TableBody from "./components/TableBody";
 
 function App() {
   // state for sort
@@ -32,15 +33,15 @@ function App() {
     setSortDirection(!sortDirection);
   }
   // handle cell click
-  const handleCellClick = (obj) => {
-    setRow(obj);
-  }
+  // const handleCellClick = (obj) => {
+  //   setRow(obj);
+  // }
 
   // handle click on button of data volume
   const buttonHandler = (v) => {
-    if (v !== volume) {
-      setRow(null);
-    }
+    // if (v !== volume) {
+    //   setRow(null);
+    // }
     setVolume(v);
   }
 
@@ -48,7 +49,15 @@ function App() {
   return (
     <div className="container">
       <Switcher volume={volume} buttonHandler={buttonHandler} />
-      {isLoading
+      <TableBody
+        contactData={contactData}
+        isLoading={isLoading}
+        sortData={sortData}
+        sortDirection={sortDirection}
+        row={row}
+        setRow={setRow}
+      />
+      {/* {isLoading
         ? <Loader />
         : <TableView
           contactData={contactData}
@@ -57,7 +66,7 @@ function App() {
           handleCellClick={handleCellClick}
         />
       }
-      {row && <Details row={row} />}
+      {row && <Details row={row} />} */}
     </div>
   );
 }
