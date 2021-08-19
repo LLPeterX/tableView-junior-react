@@ -18,12 +18,12 @@ export default function Details({ row }) {
             <li>State: <span>{row.address?.state || ''}</span> </li>
             <li>ZIP: <span>{row.address?.zip || ''}</span> </li>
           </ul>
-
         </li>
+        <li>Description: <span>{row.description}</span></li>
       </ul>
-      <div>
+      {/* <div>
         {row.description}
-      </div>
+      </div> */}
 
     </div>
   )
