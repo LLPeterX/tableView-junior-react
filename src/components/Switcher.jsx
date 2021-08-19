@@ -15,8 +15,8 @@ export default function Switcher({ volume, buttonHandler }) {
   // )
   return (
     <div className="d-grid gap-2 d-md-flex">
-      <button type="button" className={"btn btn-danger mr-4" + (volume === DATA_VOLUMES[1] ? " active" : "")} onClick={() => buttonHandler(DATA_VOLUMES[1])}>1000</button>
-      <button type="button" className={"btn btn-warning" + (volume === DATA_VOLUMES[0] ? " active" : "")} onClick={() => buttonHandler(DATA_VOLUMES[0])}>50</button>
+      <button type="button" className={"btn " + (volume === DATA_VOLUMES[0] ? "btn-warning" : "btn-outline-warning")} onClick={() => buttonHandler(DATA_VOLUMES[0])}>{DATA_VOLUMES[0]}</button>
+      <button type="button" className={"btn " + (volume === DATA_VOLUMES[1] ? "btn-danger" : "btn-outline-danger")} onClick={() => buttonHandler(DATA_VOLUMES[1])}>{DATA_VOLUMES[1]}</button>
     </div>
   )
 

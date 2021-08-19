@@ -8,35 +8,15 @@ import Switcher from "./components/Switcher";
 import { DATA_VOLUMES } from './constants'
 
 function App() {
-  //const BASE_URL = 'http://www.filltext.com/?rows=10&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone}&address={addressObject}&description={lorem|32}';
-
-  // state for data
-  //const [, setSmallData] = useState([]);
-  //state for loading data
-  //const [, setIsLoading] = useState(true);
   // state for sort
   const [sortDirection, setSortDirection] = useState(true);
   // current object to display
   const [row, setRow] = useState(null);
-  // state for switch data volume
-  //const [isButtonClick, setButtonClick] = useState(false);
-  // state for URL
-  //const [url, setUrl] = useState(BASE_URL);
   // data volume
   const [volume, setVolume] = useState(DATA_VOLUMES[0])
+
   //using hook useServerData
   const [{ contactData, setContactData, isLoading }, getData] = useServerData(volume);
-
-
-
-  // useEffect(() => {
-  //   axios.get(BASE_URL).then(res => {
-  //     // setSmallData(res.data);
-  //     // setIsLoading(false);
-  //     getData(BASE_URL);
-  //   })
-  // }, []);
-  //useEffect(getData, []);
 
   const sortData = (sortBy) => {
     //console.log(' Sort by', sortBy, sortDirection);
