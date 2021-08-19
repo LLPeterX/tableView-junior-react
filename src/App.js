@@ -1,31 +1,37 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+//import axios from "axios";
 import TableView from "./components/TableView";
 import Loader from './components/Loader'
 import Details from "./components/Details";
+import { useServerData } from './hooks/useServerData'
 
 function App() {
   const BASE_URL = 'http://www.filltext.com/?rows=10&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone}&address={addressObject}&description={lorem|32}';
 
   // state for data
-  const [smallData, setSmallData] = useState([]);
+  //const [, setSmallData] = useState([]);
   //state for loading data
-  const [isLoading, setIsLoading] = useState(true);
+  //const [, setIsLoading] = useState(true);
   // state for sort
   const [sortDirection, setSortDirection] = useState(true);
   // current object to display
   const [row, setRow] = useState(null);
 
-  useEffect(() => {
-    axios.get(BASE_URL).then(res => {
-      setSmallData(res.data);
-      setIsLoading(false);
-    })
-  }, []);
+  //using hook useServerData
+  const [{ contactData, setContactData, isLoading }, getData] = useServerData(BASE_URL);
+
+  // useEffect(() => {
+  //   axios.get(BASE_URL).then(res => {
+  //     // setSmallData(res.data);
+  //     // setIsLoading(false);
+  //     getData(BASE_URL);
+  //   })
+  // }, []);
+  useEffect(getData, []);
 
   const sortData = (sortBy) => {
-    console.log(' Sort by', sortBy, sortDirection);
-    let sortedData = [...smallData].sort((a, b) => {
+    //console.log(' Sort by', sortBy, sortDirection);
+    let sortedData = [...contactData].sort((a, b) => {
       let aValue = a[sortBy], bValue = b[sortBy];
       if (typeof aValue === 'number') {
         return sortDirection ? aValue - bValue : bValue - aValue
@@ -33,7 +39,7 @@ function App() {
         return sortDirection ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
       }
     });
-    setSmallData(sortedData);
+    setContactData(sortedData);
     setSortDirection(!sortDirection);
   }
   // handle cell click
@@ -47,7 +53,7 @@ function App() {
       {isLoading
         ? <Loader />
         : <TableView
-          contactData={smallData}
+          contactData={contactData}
           sortData={sortData}
           sortDirection={sortDirection}
           handleCellClick={handleCellClick}
