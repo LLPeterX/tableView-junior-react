@@ -27,7 +27,7 @@ function App() {
   //     getData(BASE_URL);
   //   })
   // }, []);
-  useEffect(getData, []);
+  //useEffect(getData, []);
 
   const sortData = (sortBy) => {
     //console.log(' Sort by', sortBy, sortDirection);
