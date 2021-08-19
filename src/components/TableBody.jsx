@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Loader from './Loader'
 import TableView from './TableView'
 import Details from './Details'
