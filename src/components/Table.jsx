@@ -66,7 +66,6 @@ export default function Table({ data, columns, headers, filter, rowsPerPage }) {
   useEffect(() => {
     let sortedData = sortData(data, sortBy, sortAsc, filter);
     const offset = currentPage * rowsPerPage;
-    console.log('Table useEffect() sorted:', sortBy, sortAsc, filter);
     setPages(Math.ceil(sortedData.length / rowsPerPage));
     setSurrentData(sortedData.slice(offset, offset + rowsPerPage));
     // eslint-disable-next-line

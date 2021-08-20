@@ -29,11 +29,9 @@ function App() {
     }
     const pages = Math.ceil(contactData.length / ROWS_PER_PAGE);
     setTotalPagesCount(pages);
-    //console.log('setting totalCountPage: ', pages, 'len=', contactData.length);
   }, [contactData.length, dataLoaded]);
 
   const sortData = (sortBy) => {
-    //console.log(' Sort by', sortBy, sortDirection);
     let sortedData = [...contactData].sort((a, b) => {
       let aValue = a[sortBy], bValue = b[sortBy];
       if (typeof aValue === 'number') {
@@ -53,13 +51,11 @@ function App() {
     }
     setVolume(v);
     setPage(1);
-    console.log('set volume to', v);
   }
 
   // handler switch page
   const handlePage = (pageNo) => {
     setPage(pageNo);
-    console.log(`set page to ${pageNo}, total=${totalPagesCount}`);
   }
 
 

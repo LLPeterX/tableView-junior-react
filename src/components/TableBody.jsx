@@ -4,7 +4,6 @@ import TableView from './TableView'
 import Details from './Details'
 
 export default function TableBody({ contactData, sortData, sortDirection, isLoading, row, setRow }) {
-  //console.log(`TableBody props: contac.len=${contactData.length} isLoading=${isLoading}, sortDir=${sortDirection}`);
 
   const handleCellClick = (obj) => {
     setRow(obj);

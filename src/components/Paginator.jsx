@@ -1,7 +1,6 @@
 import React from 'react'
 
 function Paginator({ totalPages, currentPage, setPage }) {
-  console.log('current page=', currentPage);
   const handlePageClick = (pageNo) => {
     if (pageNo !== currentPage) {
       setPage(pageNo);
