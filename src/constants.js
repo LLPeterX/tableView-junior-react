@@ -1,2 +1,2 @@
-export const DATA_VOLUMES = [5, 10];
-export const ROWS_PER_PAGE = 2;
+export const DATA_VOLUMES = [50, 1000];
+export const ROWS_PER_PAGE = 50;

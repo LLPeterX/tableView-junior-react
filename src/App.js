@@ -70,11 +70,11 @@ function App() {
         row={row}
         setRow={setRow}
       />
-      <Paginator
+      {totalPagesCount > 1 && <Paginator
         totalPages={totalPagesCount}
         currentPage={page}
         setPage={handlePage}
-      />
+      />}
     </div>
   );
 }
