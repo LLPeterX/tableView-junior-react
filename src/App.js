@@ -29,8 +29,8 @@ function App() {
     }
     const pages = Math.ceil(contactData.length / ROWS_PER_PAGE);
     setTotalPagesCount(pages);
-    console.log('setting totalCountPage: ', pages, 'len=', contactData.length);
-  }, [contactData.length]);
+    //console.log('setting totalCountPage: ', pages, 'len=', contactData.length);
+  }, [contactData.length, dataLoaded]);
 
   const sortData = (sortBy) => {
     //console.log(' Sort by', sortBy, sortDirection);
@@ -78,7 +78,6 @@ function App() {
         totalPages={totalPagesCount}
         currentPage={page}
         setPage={handlePage}
-
       />
     </div>
   );

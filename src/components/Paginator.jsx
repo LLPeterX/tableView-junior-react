@@ -1,10 +1,7 @@
 import React from 'react'
 
 function Paginator({ totalPages, currentPage, setPage }) {
-
-
-  //handlers
-  // pageChange
+  console.log('current page=', currentPage);
   const handlePageClick = (pageNo) => {
     if (pageNo !== currentPage) {
       setPage(pageNo);
@@ -20,20 +17,19 @@ function Paginator({ totalPages, currentPage, setPage }) {
 
   const handleNextClick = () => {
     const newPage = currentPage + 1;
-    if (newPage < totalPages) {
+    if (newPage <= totalPages) {
       setPage(newPage);
     }
-
   }
 
   return (
-    <nav aria-label="Page navigation example">
+    <nav aria-label="Page navigation">
       <ul className="pagination" style={{ justifyContent: 'center' }}>
         <li className="page-item"><button className="page-link" onClick={handlePrevClick}>Prev</button></li>
         {
           Array((totalPages || 1)).fill().map((_, i) =>
-            <li className="page-item" key={i}>
-              <button className={"page-link" + (i + 1 === currentPage ? " active" : "")}
+            <li className={"page-item" + (i + 1 === currentPage ? " active" : "")} key={i} >
+              <button className={"page-link"}
                 onClick={() => handlePageClick(i + 1)}
               >{i + 1}
               </button></li>
